@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace InnoGotchi.WebAPI.Controllers
 {
@@ -11,6 +8,13 @@ namespace InnoGotchi.WebAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class BaseController : ControllerBase
     {
+        private IMediator mediator;
+        protected IMediator Mediator =>
+            mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
+        internal Guid UserId => !User.Identity.IsAuthenticated
+            ? Guid.Empty
+            : Guid.Parse(User.FindFirst(ClaimTypes.Name).Value);
+              
     }
 }

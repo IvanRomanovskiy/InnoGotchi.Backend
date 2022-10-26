@@ -12,6 +12,7 @@ namespace InnoGotchi.Persistence.EntityTypeConfigurations
             builder.HasIndex(user => user.Id).IsUnique();
             builder.Property(user => user.FirstName).HasMaxLength(30);
             builder.Property(user => user.LastName).HasMaxLength(30);
+            builder.Property(user => user.Password);
             builder.Property(user => user.Avatar).IsRequired(true);
         }
     }

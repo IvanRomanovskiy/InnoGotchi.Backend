@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InnoGotchi.WebAPI.Properties {
+namespace InnoGotchi.Application.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace InnoGotchi.WebAPI.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InnoGotchi.WebAPI.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InnoGotchi.Application.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,16 +57,6 @@ namespace InnoGotchi.WebAPI.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Byte[].
-        /// </summary>
-        internal static byte[] DefaultAvatar {
-            get {
-                object obj = ResourceManager.GetObject("DefaultAvatar", resourceCulture);
-                return ((byte[])(obj));
             }
         }
     }

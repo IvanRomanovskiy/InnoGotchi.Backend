@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using InnoGotchi.WebAPI;
+using InnoGotchi.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +18,12 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
     config.AddProfile(new AssemblyMappingProfile(typeof(IUsersDbContext).Assembly));
 });
-
 builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+AuthOptions.KEY = builder.Configuration["KeyForJWT"];
+builder.Services.AddApplication();
 builder.Services.AddMvc(options => 
 {
     options.EnableEndpointRouting = false;

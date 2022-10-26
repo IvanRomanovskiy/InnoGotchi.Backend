@@ -1,67 +1,70 @@
-﻿using InnoGotchi.Domain;
-using InnoGotchi.Persistence;
-using InnoGotchi.WebAPI.ViewModels;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using InnoGotchi.WebAPI.Properties;
+using InnoGotchi.Application.Users.Commands.CreateUser;
+using AutoMapper;
+using InnoGotchi.WebAPI.Common.Extentions;
+using InnoGotchi.Application.Users.Queries.GetIdentity;
+using InnoGotchi.Application.Users.Commands.ChangeName;
+using InnoGotchi.Application.Users.Commands.ChangePassword;
+using InnoGotchi.WebAPI.Models.Users;
+
 namespace InnoGotchi.WebAPI.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
-        private InnoGotchiDbContext context;
+        private readonly IMapper mapper;
 
-        public AccountController(InnoGotchiDbContext context)
-        {
-            this.context = context;
-        }
+        public AccountController(IMapper mapper) => this.mapper = mapper;
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterModel model)
+        public async Task<ActionResult<Guid>> CreateUser([FromBody] CreateUserDto createUserDto)
         {
+            createUserDto.Avatar = Extentions.TryScaleImage(createUserDto.Avatar) ?? Resources.DefaultAvatar;
 
-            User? user = await context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-            if (user == null)
-            {
-                if (model.Avatar is null)
-                {
-                    model.Avatar = Resources.DefaultAvatar1;
-                }
-                context.Users.Add(new User
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Password = model.Password,
-                    Avatar = model.Avatar,
-                    Role = "user"
-                });
-                await context.SaveChangesAsync();
-                return Accepted();
-            }
-            return BadRequest(new { errorText = "User already exists" });         
+            var command = mapper.Map<CreateUserCommand>(createUserDto);
+            var userId = await Mediator.Send(command);
+            return Ok(userId);
         }
-
-
-
-        [HttpGet("/token")]
-        public async Task<IActionResult> Token(LoginModel model)
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> ChangeName([FromBody] ChangeNameDto changeNameDto)
         {
-            var identity = await GetIdentity(model);
+            var command = mapper.Map<ChangeNameCommand>(changeNameDto);
+            command.Id = UserId;
+            var userId = await Mediator.Send(command);
+            return Ok(userId);
+        }
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        {
+            var command = mapper.Map<ChangePasswordCommand>(changePasswordDto);
+            command.Id = UserId;
+            var userId = await Mediator.Send(command);
+            return Ok(userId);
+        }
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> ChangeAvatar([FromBody] ChangeAvatarDto changeAvatarDto)
+        {
+            var command = mapper.Map<ChangePasswordCommand>(changeAvatarDto);
+            command.Id = UserId;
+            var userId = await Mediator.Send(command);
+            return Ok(userId);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetToken([FromBody] GetTokenDto getTokenDto)
+        {
+            var query = mapper.Map<GetIdentityQuery>(getTokenDto);
+            var identity = await Mediator.Send(query);
             if (identity == null)
             {
                 return BadRequest(new { errorText = "Invalid username or password." });
-            }
-            
+            }        
             var now = DateTime.UtcNow;
             var jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,
@@ -71,33 +74,11 @@ namespace InnoGotchi.WebAPI.Controllers
                     claims: identity.Claims,
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
             var response = new
             {
                 access_token = encodedJwt
             };
-
             return new JsonResult(response);
-        }
-
-        private async Task<ClaimsIdentity?> GetIdentity(LoginModel model)
-        {
-
-            
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-            if (user != null)
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
-                };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
-            }
-            return null;
         }
     }
 }
