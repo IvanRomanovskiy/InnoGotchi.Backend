@@ -15,7 +15,7 @@ namespace InnoGotchi.Application.Users.Commands.ChangePassword
         public async Task<Guid> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await usersDbContext.Users.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
-            if(user == null) throw new NotFoundExeption(nameof(User), request.Id.ToString());
+            if(user == null) throw new NotFoundException(nameof(User), request.Id.ToString());
             if (user.Password.Equals(request.OldPassword.ToShaHash()))
             {
                 user.Password = request.NewPassword;

@@ -11,6 +11,7 @@ namespace InnoGotchi.Application.Users.Commands.CreateUser
     {
         private readonly IUsersDbContext usersDbContext;
         public CreateUserCommandHandler(IUsersDbContext usersDbContext) => this.usersDbContext = usersDbContext;
+
         public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = await usersDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);

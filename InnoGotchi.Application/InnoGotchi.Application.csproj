@@ -34,4 +34,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Pets\" />
+  </ItemGroup>
+
 </Project>

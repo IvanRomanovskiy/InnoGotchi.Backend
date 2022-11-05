@@ -18,6 +18,14 @@ namespace InnoGotchi.Persistence
 
             services.AddScoped<IUsersDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
+            services.AddScoped<IFarmsDbContext>(provider =>
+                provider.GetService<InnoGotchiDbContext>());
+            services.AddScoped<ICollaborationDbContext>(provider =>
+                provider.GetService<InnoGotchiDbContext>());
+            services.AddScoped<IPetsDbContext>(provider =>
+                provider.GetService<InnoGotchiDbContext>());
+            services.AddScoped<IPetsStatusesDbContext>(provider =>
+                provider.GetService<InnoGotchiDbContext>());
 
             return services;
         }

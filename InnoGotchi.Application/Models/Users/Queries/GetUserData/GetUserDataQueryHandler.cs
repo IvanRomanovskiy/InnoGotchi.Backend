@@ -26,7 +26,7 @@ namespace InnoGotchi.Application.Users.Queries.GetUserData
 
             if(entity == null || entity.Email != request.Email)
             {
-                throw new NotFoundExeption(nameof(User),request.Email);
+                throw new NotFoundException(nameof(User),request.Email);
             }
             return mapper.Map<UserDataVm>(entity);
         }

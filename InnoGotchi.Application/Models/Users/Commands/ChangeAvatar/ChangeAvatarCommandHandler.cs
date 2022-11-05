@@ -7,7 +7,9 @@ namespace InnoGotchi.Application.Users.Commands.ChangeAvatar
     public class ChangeAvatarCommandHandler : IRequestHandler<ChangeAvatarCommand, Guid>
     {
         private readonly IUsersDbContext usersDbContext;
+
         public ChangeAvatarCommandHandler(IUsersDbContext usersDbContext) => this.usersDbContext = usersDbContext;
+
         public async Task<Guid> Handle(ChangeAvatarCommand request, CancellationToken cancellationToken)
         {
             var user = usersDbContext.Users.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken).Result;

@@ -51,6 +51,9 @@ namespace InnoGotchi.WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> ChangeAvatar([FromBody] ChangeAvatarDto changeAvatarDto)
         {
+            var Avatar = Extentions.TryScaleImage(changeAvatarDto.Avatar);
+            if (Avatar == null) return BadRequest();
+            changeAvatarDto.Avatar = Avatar;
             var command = mapper.Map<ChangePasswordCommand>(changeAvatarDto);
             command.Id = UserId;
             var userId = await Mediator.Send(command);

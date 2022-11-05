@@ -17,6 +17,7 @@ builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
     config.AddProfile(new AssemblyMappingProfile(typeof(IUsersDbContext).Assembly));
+    config.AddProfile(new AssemblyMappingProfile(typeof(IFarmsDbContext).Assembly));
 });
 builder.Services.AddPersistence(builder.Configuration);
 
@@ -28,7 +29,6 @@ builder.Services.AddMvc(options =>
 {
     options.EnableEndpointRouting = false;
 });
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>

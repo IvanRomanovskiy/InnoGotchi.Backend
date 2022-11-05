@@ -3,6 +3,8 @@ using MediatR;
 using System.Reflection;
 using FluentValidation;
 using InnoGotchi.Application.Common.Behaviors;
+using InnoGotchi.Application.Interfaces;
+using InnoGotchi.Domain;
 
 namespace InnoGotchi.Application
 {

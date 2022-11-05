@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace InnoGotchi.Application.Common.Exeptions
 {
-    public class NotFoundExeption : Exception
+    public class NotFoundException : Exception
     {
-        public NotFoundExeption(string name, string key)
+        public NotFoundException(string name, string key)
            : base($"Entity \"{name}\" ({key}) not found.") { }
     }
 }
