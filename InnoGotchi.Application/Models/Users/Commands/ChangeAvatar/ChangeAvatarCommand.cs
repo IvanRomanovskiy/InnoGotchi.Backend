@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InnoGotchi.Application.Users.Commands.ChangeAvatar
+namespace InnoGotchi.Application.Models.Users.Commands.ChangeAvatar
 {
     public class ChangeAvatarCommand : IRequest<Guid>
     {

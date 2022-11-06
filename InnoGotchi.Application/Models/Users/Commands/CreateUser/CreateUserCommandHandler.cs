@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using InnoGotchi.Application.Common.Exeptions;
 using InnoGotchi.Application.Common.Extentions;
 
-namespace InnoGotchi.Application.Users.Commands.CreateUser
+namespace InnoGotchi.Application.Models.Users.Commands.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
     {

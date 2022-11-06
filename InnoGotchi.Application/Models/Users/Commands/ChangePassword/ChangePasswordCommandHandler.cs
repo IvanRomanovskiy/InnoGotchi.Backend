@@ -5,7 +5,7 @@ using InnoGotchi.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace InnoGotchi.Application.Users.Commands.ChangePassword
+namespace InnoGotchi.Application.Models.Users.Commands.ChangePassword
 {
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, Guid>
     {

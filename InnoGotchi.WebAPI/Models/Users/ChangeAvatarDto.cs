@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Common.Mappings;
-using InnoGotchi.Application.Users.Commands.ChangeAvatar;
+using InnoGotchi.Application.Models.Users.Commands.ChangeAvatar;
 
 
 namespace InnoGotchi.WebAPI.Models.Users

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InnoGotchi.Application.Users.Commands.FindUser
+namespace InnoGotchi.Application.Models.Users.Commands.FindUser
 {
     public class GetUserTokenQuery: IRequest<UserDataVm>
     {

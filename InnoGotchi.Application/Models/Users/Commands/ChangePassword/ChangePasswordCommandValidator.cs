@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InnoGotchi.Application.Users.Commands.ChangePassword
+namespace InnoGotchi.Application.Models.Users.Commands.ChangePassword
 {
     public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
     {

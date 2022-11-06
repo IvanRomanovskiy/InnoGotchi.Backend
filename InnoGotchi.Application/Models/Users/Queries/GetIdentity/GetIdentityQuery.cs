@@ -2,7 +2,7 @@
 using System.Security.Claims;
 
 
-namespace InnoGotchi.Application.Users.Queries.GetIdentity
+namespace InnoGotchi.Application.Models.Users.Queries.GetIdentity
 {
     public class GetIdentityQuery : IRequest<ClaimsIdentity>
     {

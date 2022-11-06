@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InnoGotchi.Application.Users.Commands.ChangeName
+namespace InnoGotchi.Application.Models.Users.Commands.ChangeName
 {
     public class ChangeNameCommandValidator : AbstractValidator<ChangeNameCommand>
     {

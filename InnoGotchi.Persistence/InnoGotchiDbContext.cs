@@ -9,20 +9,20 @@ namespace InnoGotchi.Persistence
     public class InnoGotchiDbContext : DbContext, 
         IUsersDbContext,IPetsDbContext,IPetsStatusesDbContext,IFarmsDbContext, IPetAppearanceDbContext, ICollaborationDbContext
     {
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
-        public DbSet<Pet> Pets { get; set; }
+        public virtual DbSet<Pet> Pets { get; set; }
 
-        public DbSet<PetStatus> PetsStatuses { get; set; }
+        public virtual DbSet<PetStatus> PetsStatuses { get; set; }
 
-        public DbSet<Farm> Farms { get; set; }
+        public virtual DbSet<Farm> Farms { get; set; }
 
-        public DbSet<Bodies> Bodies { get; set; }
-        public DbSet<Eyes> Eyes { get; set; }
-        public DbSet<Mouths> Mouths { get; set; }
-        public DbSet<Noses> Noses { get; set; }
-        public DbSet<PetAppearance> PetAppearances { get; set; }
-        public DbSet<Collaboration> Collaborations { get; set; }
+        public virtual DbSet<Bodies> Bodies { get; set; }
+        public virtual DbSet<Eyes> Eyes { get; set; }
+        public virtual DbSet<Mouths> Mouths { get; set; }
+        public virtual DbSet<Noses> Noses { get; set; }
+        public virtual DbSet<PetAppearance> PetAppearances { get; set; }
+        public virtual DbSet<Collaboration> Collaborations { get; set; }
 
         public InnoGotchiDbContext(DbContextOptions<InnoGotchiDbContext> options)
             : base(options) { }

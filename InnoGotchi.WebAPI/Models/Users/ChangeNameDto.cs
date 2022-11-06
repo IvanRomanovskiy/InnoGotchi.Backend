@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Common.Mappings;
-using InnoGotchi.Application.Users.Commands.ChangeName;
+using InnoGotchi.Application.Models.Users.Commands.ChangeName;
 
 namespace InnoGotchi.WebAPI.Models.Users
 {

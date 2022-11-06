@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Common.Mappings;
-using InnoGotchi.Application.Users.Commands.ChangePassword;
+using InnoGotchi.Application.Models.Users.Commands.ChangePassword;
 
 namespace InnoGotchi.WebAPI.Models.Users
 {

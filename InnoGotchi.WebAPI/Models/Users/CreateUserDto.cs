@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Common.Mappings;
-using InnoGotchi.Application.Users.Commands.CreateUser;
+using InnoGotchi.Application.Models.Users.Commands.CreateUser;
 
 namespace InnoGotchi.WebAPI.Models.Users
 {

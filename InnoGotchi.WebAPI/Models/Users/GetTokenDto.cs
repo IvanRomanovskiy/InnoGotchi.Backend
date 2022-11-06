@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Common.Mappings;
-using InnoGotchi.Application.Users.Queries.GetIdentity;
+using InnoGotchi.Application.Models.Users.Queries.GetIdentity;
 
 namespace InnoGotchi.WebAPI.Models.Users
 {

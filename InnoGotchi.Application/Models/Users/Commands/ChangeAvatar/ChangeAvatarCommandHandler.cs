@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace InnoGotchi.Application.Users.Commands.ChangeAvatar
+namespace InnoGotchi.Application.Models.Users.Commands.ChangeAvatar
 {
     public class ChangeAvatarCommandHandler : IRequestHandler<ChangeAvatarCommand, Guid>
     {

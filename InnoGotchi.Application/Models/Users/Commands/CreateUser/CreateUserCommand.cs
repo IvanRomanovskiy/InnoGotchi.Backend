@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InnoGotchi.Application.Users.Commands.CreateUser
+namespace InnoGotchi.Application.Models.Users.Commands.CreateUser
 {
     public class CreateUserCommand :  IRequest<Guid>
     {

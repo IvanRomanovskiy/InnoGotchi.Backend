@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace InnoGotchi.Application.Users.Commands.ChangeName
+namespace InnoGotchi.Application.Models.Users.Commands.ChangeName
 {
     public class ChangeNameCommandHandler : IRequestHandler<ChangeNameCommand, Guid>
     {

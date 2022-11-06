@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Common.Exeptions;
 using InnoGotchi.Application.Interfaces;
-using InnoGotchi.Application.Users.Commands.FindUser;
+using InnoGotchi.Application.Models.Users.Commands.FindUser;
 using InnoGotchi.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace InnoGotchi.Application.Users.Queries.GetUserData
+namespace InnoGotchi.Application.Models.Users.Queries.GetUserData
 {
     public class GetUserDataQueryHandler
         : IRequestHandler<GetUserTokenQuery, UserDataVm>

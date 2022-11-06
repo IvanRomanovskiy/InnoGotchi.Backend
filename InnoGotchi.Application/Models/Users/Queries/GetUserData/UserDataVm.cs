@@ -2,7 +2,7 @@
 using InnoGotchi.Application.Common.Mappings;
 using InnoGotchi.Domain;
 
-namespace InnoGotchi.Application.Users.Commands.FindUser
+namespace InnoGotchi.Application.Models.Users.Commands.FindUser
 {
     public class UserDataVm : IMapWith<User>
     {

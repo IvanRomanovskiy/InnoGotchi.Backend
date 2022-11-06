@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using InnoGotchi.WebAPI.Properties;
-using InnoGotchi.Application.Users.Commands.CreateUser;
+using InnoGotchi.Application.Models.Users.Commands.CreateUser;
 using AutoMapper;
 using InnoGotchi.WebAPI.Common.Extentions;
-using InnoGotchi.Application.Users.Queries.GetIdentity;
-using InnoGotchi.Application.Users.Commands.ChangeName;
-using InnoGotchi.Application.Users.Commands.ChangePassword;
+using InnoGotchi.Application.Models.Users.Queries.GetIdentity;
+using InnoGotchi.Application.Models.Users.Commands.ChangeName;
+using InnoGotchi.Application.Models.Users.Commands.ChangePassword;
 using InnoGotchi.WebAPI.Models.Users;
 
 namespace InnoGotchi.WebAPI.Controllers

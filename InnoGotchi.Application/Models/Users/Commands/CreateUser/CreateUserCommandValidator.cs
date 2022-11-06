@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InnoGotchi.Application.Users.Commands.CreateUser
+namespace InnoGotchi.Application.Models.Users.Commands.CreateUser
 {
     public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {

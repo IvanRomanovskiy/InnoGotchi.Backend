@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InnoGotchi.Application.Users.Queries.GetIdentity
+namespace InnoGotchi.Application.Models.Users.Queries.GetIdentity
 {
     public class GetIdentityQueryValidation : AbstractValidator<GetIdentityQuery>
     {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InnoGotchi.Application.Users.Commands.ChangePassword
+namespace InnoGotchi.Application.Models.Users.Commands.ChangePassword
 {
     public class ChangePasswordCommand : IRequest<Guid>
     {

@@ -2,11 +2,9 @@
 using InnoGotchi.Application.Farms.Commands.AddCollaborator;
 using InnoGotchi.Application.Farms.Commands.CreateFarm;
 using InnoGotchi.Application.Models.Farms.Queries.GetFarmInfo;
-using InnoGotchi.Domain;
 using InnoGotchi.WebAPI.Models.Farm;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace InnoGotchi.WebAPI.Controllers
 {

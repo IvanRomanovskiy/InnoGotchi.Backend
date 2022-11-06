@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace InnoGotchi.Application.Users.Queries.GetIdentity
+namespace InnoGotchi.Application.Models.Users.Queries.GetIdentity
 {
     public class GetIdentityQueryHandler
         : IRequestHandler<GetIdentityQuery, ClaimsIdentity>

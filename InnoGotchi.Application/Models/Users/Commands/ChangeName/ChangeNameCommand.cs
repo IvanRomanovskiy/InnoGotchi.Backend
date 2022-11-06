@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InnoGotchi.Application.Users.Commands.ChangeName
+namespace InnoGotchi.Application.Models.Users.Commands.ChangeName
 {
     public class ChangeNameCommand :IRequest<Guid>
     {
