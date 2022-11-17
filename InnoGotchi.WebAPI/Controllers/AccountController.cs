@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using InnoGotchi.WebAPI.Properties;
 using InnoGotchi.Application.Models.Users.Commands.CreateUser;
 using AutoMapper;
@@ -10,6 +11,10 @@ using InnoGotchi.Application.Models.Users.Queries.GetIdentity;
 using InnoGotchi.Application.Models.Users.Commands.ChangeName;
 using InnoGotchi.Application.Models.Users.Commands.ChangePassword;
 using InnoGotchi.WebAPI.Models.Users;
+using InnoGotchi.Application.Models.Users.Queries.GetUserData;
+using InnoGotchi.Application.Models.Users.Commands.ChangeAvatar;
+using System.Text;
+using System.Text.Json;
 
 namespace InnoGotchi.WebAPI.Controllers
 {
@@ -23,9 +28,10 @@ namespace InnoGotchi.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateUser([FromBody] CreateUserDto createUserDto)
         {
-            createUserDto.Avatar = Extentions.TryScaleImage(createUserDto.Avatar) ?? Resources.DefaultAvatar;
+            var Avatar = Extentions.TryScaleImage(createUserDto.AvatarBase) ?? Resources.DefaultAvatar;
 
             var command = mapper.Map<CreateUserCommand>(createUserDto);
+            command.Avatar = Avatar;
             var userId = await Mediator.Send(command);
             return Ok(userId);
         }
@@ -45,21 +51,25 @@ namespace InnoGotchi.WebAPI.Controllers
             var command = mapper.Map<ChangePasswordCommand>(changePasswordDto);
             command.Id = UserId;
             var userId = await Mediator.Send(command);
-            return Ok(userId);
+            if(userId == Guid.Empty) return BadRequest(userId);
+            else return Ok(userId);
         }
         [HttpPut]
         [Authorize]
         public async Task<IActionResult> ChangeAvatar([FromBody] ChangeAvatarDto changeAvatarDto)
         {
-            var Avatar = Extentions.TryScaleImage(changeAvatarDto.Avatar);
+            var Avatar = Extentions.TryScaleImage(changeAvatarDto.AvatarBase);
             if (Avatar == null) return BadRequest();
-            changeAvatarDto.Avatar = Avatar;
-            var command = mapper.Map<ChangePasswordCommand>(changeAvatarDto);
-            command.Id = UserId;
+
+            var command = new ChangeAvatarCommand
+            {
+                Id = UserId,
+                Avatar = Avatar
+            };
             var userId = await Mediator.Send(command);
             return Ok(userId);
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetToken([FromBody] GetTokenDto getTokenDto)
         {
             var query = mapper.Map<GetIdentityQuery>(getTokenDto);
@@ -83,5 +93,23 @@ namespace InnoGotchi.WebAPI.Controllers
             };
             return new JsonResult(response);
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetUserData()
+        {
+            var query = new GetUserDataQuery()
+            {
+                Id = UserId
+            };
+            var result = await Mediator.Send(query);
+            string stringData = JsonSerializer.Serialize<UserDataVm>(result);
+            //var stringContent = new StringContent(stringData, Encoding.UTF8, "application/json"); 
+
+
+
+
+            return Ok(stringData);
+        }
+
     }
 }

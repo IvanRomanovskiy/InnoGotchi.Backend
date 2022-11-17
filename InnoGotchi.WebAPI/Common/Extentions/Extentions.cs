@@ -30,9 +30,9 @@ namespace InnoGotchi.WebAPI.Common.Extentions
             return destImage;
         }
 
-        public static byte[]? TryScaleImage(byte[] value)
+        public static byte[]? TryScaleImage(string baseStringPicture)
         {
-
+            var value = Convert.FromBase64String(baseStringPicture);
             try
             {
                 using (var stream = new MemoryStream(value))

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Farms.Commands.AddCollaborator;
 using InnoGotchi.Application.Farms.Commands.CreateFarm;
+using InnoGotchi.Application.Models.Farms.Queries.GetCollaboratorFarms;
 using InnoGotchi.Application.Models.Farms.Queries.GetFarmInfo;
 using InnoGotchi.WebAPI.Models.Farm;
 using Microsoft.AspNetCore.Authorization;
@@ -43,6 +44,23 @@ namespace InnoGotchi.WebAPI.Controllers
             };
             var farmInfoVm = await Mediator.Send(query);
             return new JsonResult(farmInfoVm);
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetCollaboratiorFarms()
+        {
+            var query = new GetCollaboratorFarmsQuery
+            {
+                UserId = this.UserId
+            };
+            var collaboratorFarmVms = await Mediator.Send(query);
+
+            var json = new
+            {
+                result = collaboratorFarmVms
+            };
+
+            return new JsonResult(json);
         }
 
     }

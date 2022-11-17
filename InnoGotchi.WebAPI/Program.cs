@@ -24,6 +24,7 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 AuthOptions.KEY = builder.Configuration["KeyForJWT"];
+
 builder.Services.AddApplication();
 builder.Services.AddMvc(options => 
 {
@@ -86,7 +87,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch(Exception exeption)
     {
-
+        
     }
 }
 

@@ -1,10 +1,9 @@
 ﻿using MediatR;
 
-namespace InnoGotchi.Application.Models.Users.Commands.FindUser
+namespace InnoGotchi.Application.Models.Users.Queries.GetUserData
 {
-    public class GetUserTokenQuery: IRequest<UserDataVm>
+    public class GetUserDataQuery: IRequest<UserDataVm>
     {
         public Guid Id { get; set; }
-        public string Email { get; set; }
     }
 }

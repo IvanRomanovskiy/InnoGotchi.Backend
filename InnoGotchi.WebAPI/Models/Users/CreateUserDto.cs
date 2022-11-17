@@ -10,7 +10,7 @@ namespace InnoGotchi.WebAPI.Models.Users
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public byte[] Avatar { get; set; }
+        public string AvatarBase { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -22,9 +22,7 @@ namespace InnoGotchi.WebAPI.Models.Users
                 .ForMember(userCommand => userCommand.Email,
                 opt => opt.MapFrom(userDto => userDto.Email))
                 .ForMember(userCommand => userCommand.Password,
-                opt => opt.MapFrom(userDto => userDto.Password))
-                .ForMember(userCommand => userCommand.Avatar,
-                opt => opt.MapFrom(userDto => userDto.Avatar));
+                opt => opt.MapFrom(userDto => userDto.Password));
         }
     }
 }

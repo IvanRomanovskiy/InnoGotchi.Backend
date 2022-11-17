@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Common.Exeptions;
 using InnoGotchi.Application.Interfaces;
-using InnoGotchi.Application.Models.Users.Commands.FindUser;
 using InnoGotchi.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace InnoGotchi.Application.Models.Users.Queries.GetUserData
 {
     public class GetUserDataQueryHandler
-        : IRequestHandler<GetUserTokenQuery, UserDataVm>
+        : IRequestHandler<GetUserDataQuery, UserDataVm>
     {
         private readonly IUsersDbContext dbContext;
         private readonly IMapper mapper;
@@ -20,14 +19,10 @@ namespace InnoGotchi.Application.Models.Users.Queries.GetUserData
             this.mapper = mapper;
         }
 
-        public async Task<UserDataVm> Handle(GetUserTokenQuery request, CancellationToken cancellationToken)
+        public async Task<UserDataVm> Handle(GetUserDataQuery request, CancellationToken cancellationToken)
         {
             var entity = await dbContext.Users.FirstOrDefaultAsync(user => user.Id == request.Id, cancellationToken);
 
-            if(entity == null || entity.Email != request.Email)
-            {
-                throw new NotFoundException(nameof(User),request.Email);
-            }
             return mapper.Map<UserDataVm>(entity);
         }
     }

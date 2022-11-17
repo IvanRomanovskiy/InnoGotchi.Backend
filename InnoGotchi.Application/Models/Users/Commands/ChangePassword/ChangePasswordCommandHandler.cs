@@ -18,7 +18,7 @@ namespace InnoGotchi.Application.Models.Users.Commands.ChangePassword
             if(user == null) throw new NotFoundException(nameof(User), request.Id.ToString());
             if (user.Password.Equals(request.OldPassword.ToShaHash()))
             {
-                user.Password = request.NewPassword;
+                user.Password = request.NewPassword.ToShaHash();
                 await usersDbContext.SaveChangesAsync(cancellationToken);
             }
             else return Guid.Empty;

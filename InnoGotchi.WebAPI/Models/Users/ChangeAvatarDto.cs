@@ -5,14 +5,8 @@ using InnoGotchi.Application.Models.Users.Commands.ChangeAvatar;
 
 namespace InnoGotchi.WebAPI.Models.Users
 {
-    public class ChangeAvatarDto : IMapWith<ChangeAvatarCommand>
+    public class ChangeAvatarDto
     {
-        public byte[] Avatar { get; set; }
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<ChangeAvatarDto, ChangeAvatarCommand>()
-            .ForMember(userCommand => userCommand.Avatar,
-            opt => opt.MapFrom(userDto => userDto.Avatar));
-        }
+        public string AvatarBase { get; set; }
     }
 }

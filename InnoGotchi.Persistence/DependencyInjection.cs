@@ -26,6 +26,8 @@ namespace InnoGotchi.Persistence
                 provider.GetService<InnoGotchiDbContext>());
             services.AddScoped<IPetsStatusesDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
+            services.AddScoped<IPetAppearanceDbContext>(provider =>
+                provider.GetService<InnoGotchiDbContext>());
 
             return services;
         }
