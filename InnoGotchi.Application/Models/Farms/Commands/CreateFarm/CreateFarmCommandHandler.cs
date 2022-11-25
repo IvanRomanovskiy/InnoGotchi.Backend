@@ -30,6 +30,8 @@ namespace InnoGotchi.Application.Farms.Commands.CreateFarm
                     Id = Guid.NewGuid(),
                     Name = request.Name,
                     Owner = user,
+                    Collaborations = new List<Collaboration>(),
+                    Pets = new List<Pet>()
                 };
                 farmsDbContext.Farms.Add(newFarm);
                 await farmsDbContext.SaveChangesAsync(cancellationToken);

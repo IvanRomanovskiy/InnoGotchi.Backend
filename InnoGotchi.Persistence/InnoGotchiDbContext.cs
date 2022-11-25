@@ -2,6 +2,7 @@
 using InnoGotchi.Domain;
 using InnoGotchi.Domain.Appearance;
 using InnoGotchi.Persistence.EntityTypeConfigurations;
+using InnoGotchi.Persistence.EntityTypeConfigurations.Appearance;
 using Microsoft.EntityFrameworkCore;
 
 namespace InnoGotchi.Persistence
@@ -32,9 +33,15 @@ namespace InnoGotchi.Persistence
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new FarmConfiguration());
             builder.ApplyConfiguration(new CollaborationConfiguration());
+            builder.ApplyConfiguration(new PetBodiesConfiguration());
+            builder.ApplyConfiguration(new PetEyesConfiguration());
+            builder.ApplyConfiguration(new PetNosesConfiguration());
+            builder.ApplyConfiguration(new PetMouthsConfiguration());
             builder.ApplyConfiguration(new PetConfiguration());
             builder.ApplyConfiguration(new PetStatusConfiguration());
             base.OnModelCreating(builder);
+
+
         }
 
     }

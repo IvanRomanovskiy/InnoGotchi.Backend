@@ -12,6 +12,7 @@ namespace InnoGotchi.Persistence.EntityTypeConfigurations
             builder.HasIndex(pet => pet.Id).IsUnique();
             builder.HasIndex(pet => pet.Name).IsUnique();
             builder.Property(pet => pet.Name).HasMaxLength(30);
+            builder.Property(pet => pet.DateOfDeath).IsRequired(false);
             builder.HasOne(pet => pet.Status).WithOne().HasPrincipalKey<Pet>(key => key.Id);
             builder.HasOne(pet => pet.Appearance).WithOne().HasPrincipalKey<PetAppearance>(key => key.Id);
         }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InnoGotchi.Application.Common.Extentions;
 using InnoGotchi.Application.Common.Mappings;
 using InnoGotchi.Domain;
 
@@ -9,7 +10,7 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetCollaboratorFarms
         public string FarmName { get; set; }
         public string OwnerFirstName { get; set; }
         public string OwnerLastName { get; set; }
-        public byte[] OwnerAvatar { get; set; }
+        public string OwnerAvatarBase { get; set; }
         public virtual ICollection<Pet> Pets { get; set; }
 
         public void Mapping(Profile profile)
@@ -21,8 +22,8 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetCollaboratorFarms
                 opt => opt.MapFrom(farm => farm.Owner.FirstName))
                 .ForMember(collabVm => collabVm.OwnerLastName,
                 opt => opt.MapFrom(farm => farm.Owner.LastName))
-                .ForMember(collabVm => collabVm.OwnerAvatar,
-                opt => opt.MapFrom(farm => farm.Owner.Avatar))
+                .ForMember(collabVm => collabVm.OwnerAvatarBase,
+                opt => opt.MapFrom(farm => farm.Owner.Avatar.ToBase64String()))
                 .ForMember(collabVm => collabVm.Pets,
                 opt => opt.MapFrom(farm => farm.Pets));
         }

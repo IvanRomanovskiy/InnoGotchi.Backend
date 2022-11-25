@@ -55,12 +55,9 @@ namespace InnoGotchi.WebAPI.Controllers
             };
             var collaboratorFarmVms = await Mediator.Send(query);
 
-            var json = new
-            {
-                result = collaboratorFarmVms
-            };
 
-            return new JsonResult(json);
+
+            return new JsonResult(collaboratorFarmVms);
         }
 
     }

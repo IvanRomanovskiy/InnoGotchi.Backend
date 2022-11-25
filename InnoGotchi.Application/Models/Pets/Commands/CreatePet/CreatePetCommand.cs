@@ -6,9 +6,9 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
     {
         public Guid UserId { get; set; }
         public string PetName { get; set; }
-        public Guid BodyId { get; set; }
-        public Guid EyeId { get; set; }
-        public Guid MouthId { get; set; }
-        public Guid NoseId { get; set; }
+        public string BodyPath { get; set; }
+        public string EyePath { get; set; }
+        public string MouthPath { get; set; }
+        public string NosePath { get; set; }
     }
 }

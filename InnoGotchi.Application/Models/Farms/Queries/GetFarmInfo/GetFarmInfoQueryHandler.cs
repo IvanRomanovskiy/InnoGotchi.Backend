@@ -46,8 +46,8 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetFarmInfo
                 Convert.ToInt64(farm.Pets
                 .Sum(
                     pet =>
-                    ((pet.IsAlive ? DateTime.Now : pet.DateOfDeath)
-                    .Subtract(pet.DateOfDeath) / pet.Status.FeedingCount).TotalHours
+                    (((pet.IsAlive ? DateTime.Now : pet.DateOfDeath) ?? DateTime.Now)
+                    .Subtract(pet.DateOfDeath ?? DateTime.Now) / pet.Status.FeedingCount).TotalHours
                     ) / farm.Pets.Count));
             }
             catch { averageFeedingPeriod = TimeSpan.Zero; }
@@ -57,8 +57,8 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetFarmInfo
                 Convert.ToInt64(farm.Pets
                 .Sum(
                     pet =>
-                    ((pet.IsAlive ? DateTime.Now : pet.DateOfDeath)
-                    .Subtract(pet.DateOfDeath) / pet.Status.ThirstQuenchingCount).TotalHours
+                    (((pet.IsAlive ? DateTime.Now : pet.DateOfDeath) ?? DateTime.Now)
+                    .Subtract(pet.DateOfDeath ?? DateTime.Now) / pet.Status.ThirstQuenchingCount).TotalHours
                     ) / farm.Pets.Count));
             }
             catch { averageThirstQuenchingPeriod = TimeSpan.Zero; }

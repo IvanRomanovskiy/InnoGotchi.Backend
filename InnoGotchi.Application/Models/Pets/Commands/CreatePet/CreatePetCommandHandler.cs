@@ -29,20 +29,20 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
             if (farm == null) throw new NotFoundException(nameof(farm), request.UserId.ToString());
 
             var body = await petAppearanceDbContext.Bodies
-                .FirstOrDefaultAsync(b => b.Id == request.BodyId, cancellationToken);
-            if (body == null) throw new NotFoundException(nameof(body), request.BodyId.ToString());
+                .FirstOrDefaultAsync(b => b.Path == request.BodyPath, cancellationToken);
+            if (body == null) throw new NotFoundException(nameof(body), request.BodyPath.ToString());
 
             var eye = await petAppearanceDbContext.Eyes
-                .FirstOrDefaultAsync(e => e.Id == request.EyeId, cancellationToken);
-            if (eye == null) throw new NotFoundException(nameof(eye), request.EyeId.ToString());
+                .FirstOrDefaultAsync(e => e.Path == request.EyePath, cancellationToken);
+            if (eye == null) throw new NotFoundException(nameof(eye), request.EyePath.ToString());
 
             var mouth = await petAppearanceDbContext.Mouths
-                .FirstOrDefaultAsync(m => m.Id == request.MouthId, cancellationToken);
-            if (mouth == null) throw new NotFoundException(nameof(mouth), request.MouthId.ToString());
+                .FirstOrDefaultAsync(m => m.Path == request.MouthPath, cancellationToken);
+            if (mouth == null) throw new NotFoundException(nameof(mouth), request.MouthPath.ToString());
 
             var nose = await petAppearanceDbContext.Noses
-                .FirstOrDefaultAsync(n => n.Id == request.NoseId, cancellationToken);
-            if (nose == null) throw new NotFoundException(nameof(nose), request.NoseId.ToString());
+                .FirstOrDefaultAsync(n => n.Path == request.NosePath, cancellationToken);
+            if (nose == null) throw new NotFoundException(nameof(nose), request.NosePath.ToString());
 
             Guid PetId = Guid.NewGuid();
 
@@ -54,7 +54,9 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
                 Mouth = mouth,
                 Nose = nose
             };
-            petAppearanceDbContext.PetAppearances.Add(petAppearance);
+
+            //petAppearanceDbContext.PetAppearances.Add(petAppearance);
+            //await petAppearanceDbContext.SaveChangesAsync(cancellationToken);
 
             PetStatus status = new PetStatus
             {
@@ -71,7 +73,8 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
                 Age = 0
             };
 
-            petsStatusesDbContext.PetsStatuses.Add(status);
+            //petsStatusesDbContext.PetsStatuses.Add(status);
+            //await petsStatusesDbContext.SaveChangesAsync(cancellationToken);
 
             Pet newPet = new Pet
             {
@@ -79,18 +82,21 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
                 Name = request.PetName,
                 Appearance = petAppearance,
                 DateOfBirth = DateTime.Now,
+                DateOfDeath = null,
                 IsAlive = true,
                 Status = status
             };
 
             petsDbContext.Pets.Add(newPet);
+            await petsDbContext.SaveChangesAsync(cancellationToken);
+
+            if(farm.Pets == null) farm.Pets = new List<Pet>();
+
             farm.Pets.Add(newPet);
 
-            await petAppearanceDbContext.SaveChangesAsync(cancellationToken);
-            await petsStatusesDbContext.SaveChangesAsync(cancellationToken);
-            await petsStatusesDbContext.SaveChangesAsync(cancellationToken);
-            await petsDbContext.SaveChangesAsync(cancellationToken);
+            farmDbContext.Farms.Update(farm);
             await farmDbContext.SaveChangesAsync(cancellationToken);
+            
 
 
             return PetId;

@@ -7,24 +7,24 @@ namespace InnoGotchi.WebAPI.Models.Pets
     public class CreatePetDto : IMapWith<CreatePetCommand>
     {
         public string PetName { get; set; }
-        public Guid BodyId { get; set; }
-        public Guid EyeId { get; set; }
-        public Guid MouthId { get; set; }
-        public Guid NoseId { get; set; }
+        public string BodyPath { get; set; }
+        public string EyePath { get; set; }
+        public string MouthPath { get; set; }
+        public string NosePath { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreatePetDto, CreatePetCommand>()
                 .ForMember(userCommand => userCommand.PetName,
                 opt => opt.MapFrom(userDto => userDto.PetName))
-                .ForMember(userCommand => userCommand.BodyId,
-                opt => opt.MapFrom(userDto => userDto.BodyId))
-                .ForMember(userCommand => userCommand.EyeId,
-                opt => opt.MapFrom(userDto => userDto.EyeId))
-                .ForMember(userCommand => userCommand.MouthId,
-                opt => opt.MapFrom(userDto => userDto.MouthId))
-                .ForMember(userCommand => userCommand.NoseId,
-                opt => opt.MapFrom(userDto => userDto.NoseId));
+                .ForMember(userCommand => userCommand.BodyPath,
+                opt => opt.MapFrom(userDto => userDto.BodyPath))
+                .ForMember(userCommand => userCommand.EyePath,
+                opt => opt.MapFrom(userDto => userDto.EyePath))
+                .ForMember(userCommand => userCommand.MouthPath,
+                opt => opt.MapFrom(userDto => userDto.MouthPath))
+                .ForMember(userCommand => userCommand.NosePath,
+                opt => opt.MapFrom(userDto => userDto.NosePath));
         }
     }
 }
