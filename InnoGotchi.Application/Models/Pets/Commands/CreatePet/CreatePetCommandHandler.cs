@@ -6,23 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
 {
-    public class CreatePetCommandHandler : IRequestHandler<CreatePetCommand, Guid>
+    public class CreatePetCommandHandler : IRequestHandler<CreatePetCommand, Pet>
     {
         private readonly IFarmsDbContext farmDbContext;
         private readonly IPetsDbContext petsDbContext;
         private readonly IPetAppearanceDbContext petAppearanceDbContext;
-        private readonly IPetsStatusesDbContext petsStatusesDbContext;
 
         public CreatePetCommandHandler(IFarmsDbContext farmDbContext, IPetsDbContext petsDbContext,
-        IPetAppearanceDbContext petAppearanceDbContext, IPetsStatusesDbContext petsStatusesDbContext)
+        IPetAppearanceDbContext petAppearanceDbContext)
         {
             this.farmDbContext = farmDbContext;
             this.petsDbContext = petsDbContext;
             this.petAppearanceDbContext = petAppearanceDbContext;
-            this.petsStatusesDbContext = petsStatusesDbContext;
         }
 
-        public async Task<Guid> Handle(CreatePetCommand request, CancellationToken cancellationToken)
+        public async Task<Pet> Handle(CreatePetCommand request, CancellationToken cancellationToken)
         {
             var farm = await farmDbContext.Farms
                 .FirstOrDefaultAsync(f => f.Owner.Id == request.UserId, cancellationToken);
@@ -55,9 +53,6 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
                 Nose = nose
             };
 
-            //petAppearanceDbContext.PetAppearances.Add(petAppearance);
-            //await petAppearanceDbContext.SaveChangesAsync(cancellationToken);
-
             PetStatus status = new PetStatus
             {
                 Id = PetId,
@@ -72,9 +67,6 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
                 ThirstQuenchingCount = 0,
                 Age = 0
             };
-
-            //petsStatusesDbContext.PetsStatuses.Add(status);
-            //await petsStatusesDbContext.SaveChangesAsync(cancellationToken);
 
             Pet newPet = new Pet
             {
@@ -99,7 +91,7 @@ namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
             
 
 
-            return PetId;
+            return newPet;
         }
     }
 }

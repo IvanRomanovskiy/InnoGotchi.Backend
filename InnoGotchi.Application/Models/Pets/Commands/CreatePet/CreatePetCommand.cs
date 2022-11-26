@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using InnoGotchi.Domain;
+using MediatR;
 
 namespace InnoGotchi.Application.Models.Pets.Commands.CreatePet
 {
-    public class CreatePetCommand : IRequest<Guid>
+    public class CreatePetCommand : IRequest<Pet>
     {
         public Guid UserId { get; set; }
         public string PetName { get; set; }
