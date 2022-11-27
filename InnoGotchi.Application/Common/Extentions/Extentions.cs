@@ -11,5 +11,9 @@ namespace InnoGotchi.Application.Common.Extentions
 
         public static string ToBase64String(this byte[] bytes) => Convert.ToBase64String(bytes);
         public static byte[] ToByteFromBase64(this string baseStr) => Convert.FromBase64String(baseStr);
+        public static TimeSpan StripMilliseconds(this TimeSpan time)
+        {
+            return new TimeSpan(time.Days, time.Hours, time.Minutes, time.Seconds);
+        }
     }
 }

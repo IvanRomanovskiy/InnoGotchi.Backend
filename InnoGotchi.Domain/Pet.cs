@@ -1,4 +1,5 @@
-﻿namespace InnoGotchi.Domain
+﻿
+namespace InnoGotchi.Domain
 {
     public class Pet
     {

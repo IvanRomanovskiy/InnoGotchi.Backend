@@ -103,11 +103,6 @@ namespace InnoGotchi.WebAPI.Controllers
             };
             var result = await Mediator.Send(query);
             string stringData = JsonSerializer.Serialize<UserDataVm>(result);
-            //var stringContent = new StringContent(stringData, Encoding.UTF8, "application/json"); 
-
-
-
-
             return Ok(stringData);
         }
 

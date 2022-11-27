@@ -36,29 +36,29 @@ namespace InnoGotchi.WebAPI.Controllers
         }
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> FeedPet(Guid PetId)
+        public async Task<IActionResult> FeedPet(FeedingPetDto petDto)
         {
             FeedPetCommand command = new FeedPetCommand()
             {
                 UserId = UserId,
-                PetId = PetId
+                PetId = petDto.PetId
             };
-            var result = Mediator.Send(command);
+            var result = await Mediator.Send(command);
 
-            return Ok(PetId);
+            return Ok(result);
         }
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> ThirstQuenchingPet(Guid PetId)
+        public async Task<IActionResult> ThirstQuenchingPet(ThirstQuenchingPetDto petDto)
         {
             ThirstQuenchingPetCommand command = new ThirstQuenchingPetCommand()
             {
                 UserId = UserId,
-                PetId = PetId
+                PetId = petDto.PetId
             };
-            var result = Mediator.Send(command);
+            var result = await Mediator.Send(command);
 
-            return Ok(PetId);
+            return Ok(result);
         }
     }
 }

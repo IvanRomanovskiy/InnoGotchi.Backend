@@ -16,17 +16,17 @@ namespace InnoGotchi.Persistence
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddScoped<IUsersDbContext>(provider =>
+            services.AddTransient<IUsersDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
-            services.AddScoped<IFarmsDbContext>(provider =>
+            services.AddTransient<IFarmsDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
-            services.AddScoped<ICollaborationDbContext>(provider =>
+            services.AddTransient<ICollaborationDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
-            services.AddScoped<IPetsDbContext>(provider =>
+            services.AddTransient<IPetsDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
-            services.AddScoped<IPetsStatusesDbContext>(provider =>
+            services.AddTransient<IPetsStatusesDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
-            services.AddScoped<IPetAppearanceDbContext>(provider =>
+            services.AddTransient<IPetAppearanceDbContext>(provider =>
                 provider.GetService<InnoGotchiDbContext>());
 
             return services;

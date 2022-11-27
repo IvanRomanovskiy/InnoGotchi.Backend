@@ -1,40 +1,61 @@
 ﻿using InnoGotchi.Application.Common.Exeptions;
 using InnoGotchi.Application.Interfaces;
+using InnoGotchi.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace InnoGotchi.Application.Models.Pets.Commands.FeedPet
 {
-    public class FeedPetCommandHandler : IRequestHandler<FeedPetCommand, Guid>
+    public class FeedPetCommandHandler : IRequestHandler<FeedPetCommand, PetStatus>
     {
-        public IFarmsDbContext farmsDbContext;
-        public IPetsDbContext petsDbContext;
+        private readonly IFarmsDbContext farmDbContext;
+        private readonly IPetsDbContext petsDbContext;
+        private readonly ICollaborationDbContext collaborationDbContext;
+        private readonly IPetsStatusesDbContext petsStatusesDbContext;
 
-        public FeedPetCommandHandler(IFarmsDbContext farmsDbContext, IPetsDbContext petsDbContext)
+        public FeedPetCommandHandler(IFarmsDbContext farmDbContext, 
+            IPetsDbContext petsDbContext, ICollaborationDbContext collaborationDbContext, IPetsStatusesDbContext petsStatusesDbContext)
         {
-            this.farmsDbContext = farmsDbContext;
-            this.petsDbContext = petsDbContext;
+            this.petsDbContext = petsDbContext;            
+            this.collaborationDbContext = collaborationDbContext;
+            this.petsStatusesDbContext = petsStatusesDbContext;
+            this.farmDbContext = farmDbContext;
         }
 
-        public async Task<Guid> Handle(FeedPetCommand request, CancellationToken cancellationToken)
+        public async Task<PetStatus> Handle(FeedPetCommand request, CancellationToken cancellationToken)
         {
-            var pet = await petsDbContext.Pets
-                .FirstOrDefaultAsync(pet => pet.Id == request.PetId, cancellationToken);
-            if (pet == null) throw new NotFoundException(nameof(pet), request.PetId.ToString());
+            var selectedPet = await petsDbContext.Pets
+           .FirstOrDefaultAsync(pet => pet.Id == request.PetId, cancellationToken);
 
-            var farmPet = await farmsDbContext.Farms
-                .FirstOrDefaultAsync(farm => farm.Pets.Contains(pet));
-            if (farmPet == null) throw new Exception("Pet exists, but farm not found");
+           if (selectedPet == null) throw new NotFoundException(nameof(selectedPet), request.PetId.ToString());
 
-            var collab = farmPet.Collaborations
-                .FirstOrDefault(collab => collab.IdCollaborator == request.UserId);
+            var collabs = collaborationDbContext.Collaborations
+            .Where(c => c.IdCollaborator == request.UserId);
 
-            if (farmPet.Owner.Id == request.UserId || collab != null)
-                pet.Feed();
 
+
+            var farms = farmDbContext.Farms.Include(farm => farm.Owner)
+            .Where(farm => (farm.Owner.Id == request.UserId) || 
+            collabs.FirstOrDefault(c => c.IdOwner == farm.Owner.Id) != null);
+
+
+            var requestPet = farms
+                .Select(farm => farm.Pets
+                .FirstOrDefault(pet => pet.Id == request.PetId)).FirstOrDefault();
+            if (requestPet == null) throw new Exception("Pet exists, but user don't have permission to them");
+
+            var status = await petsStatusesDbContext.PetsStatuses
+            .FirstOrDefaultAsync(stat => stat.Id == requestPet.Id);
+
+            requestPet.Status = status;
+
+            requestPet.Feed();
+            petsDbContext.Pets.Update(requestPet);
             await petsDbContext.SaveChangesAsync(cancellationToken);
-            await farmsDbContext.SaveChangesAsync(cancellationToken);
-            return request.PetId;
+
+
+            return requestPet.Status;
         }
     }
 }

@@ -49,7 +49,6 @@ namespace InnoGotchi.Application.Models.Pets.Queries.GetPets
                 petsDbContext.Pets.Update(pet);
             }
             await petsDbContext.SaveChangesAsync(cancellationToken);
-
             return vm;
         }
     }
