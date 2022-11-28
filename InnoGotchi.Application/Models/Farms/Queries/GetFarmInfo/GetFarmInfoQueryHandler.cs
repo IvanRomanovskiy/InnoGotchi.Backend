@@ -54,8 +54,6 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetFarmInfo
             }
             catch { averagePetsHappinessDays = 0; }
 
-
-
             try
             {
                 var ticksFeeding = pets.Select(pet => (pet.Status.FeedingCount != 0) ?
@@ -73,8 +71,6 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetFarmInfo
                 averageThirstQuenchingPeriod = TimeSpan.FromTicks(ticksThirstQuenching.ToList().Sum() / pets.Count()).StripMilliseconds();
             }
             catch { averageThirstQuenchingPeriod = new TimeSpan(); }
-
-
 
             try
             {

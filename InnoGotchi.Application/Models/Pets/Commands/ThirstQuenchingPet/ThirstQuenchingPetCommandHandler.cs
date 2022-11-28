@@ -39,22 +39,21 @@ namespace InnoGotchi.Application.Models.Pets.Commands.ThirstQuenchingPet
             collabs.FirstOrDefault(c => c.IdOwner == farm.Owner.Id) != null);
 
 
-            var requestPet = farms
-                .Select(farm => farm.Pets
-                .FirstOrDefault(pet => pet.Id == request.PetId)).FirstOrDefault();
-            if (requestPet == null) throw new Exception("Pet exists, but user don't have permission to them");
+            var canDrink = await farms.FirstOrDefaultAsync(farm => farm.Pets.FirstOrDefault(pet => pet.Id == selectedPet.Id) != null);
+
+            if (canDrink == null) throw new Exception("Pet exists, but user don't have permission to them");
 
             var status = await petsStatusesDbContext.PetsStatuses
-            .FirstOrDefaultAsync(stat => stat.Id == requestPet.Id);
+            .FirstOrDefaultAsync(stat => stat.Id == selectedPet.Id);
 
-            requestPet.Status = status;
-
-            requestPet.Drink();
-            petsDbContext.Pets.Update(requestPet);
+            selectedPet.Status = status;
+            selectedPet.Update();
+            selectedPet.Drink();
+            petsDbContext.Pets.Update(selectedPet);
             await petsDbContext.SaveChangesAsync(cancellationToken);
 
 
-            return requestPet.Status;
+            return selectedPet.Status;
         }
     }
 }
