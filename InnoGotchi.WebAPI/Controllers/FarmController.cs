@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Farms.Commands.AddCollaborator;
 using InnoGotchi.Application.Farms.Commands.CreateFarm;
+using InnoGotchi.Application.Models.Farms.Queries.GetAllPets;
 using InnoGotchi.Application.Models.Farms.Queries.GetCollaboratorFarms;
 using InnoGotchi.Application.Models.Farms.Queries.GetFarmInfo;
 using InnoGotchi.WebAPI.Models.Farm;
@@ -45,6 +46,18 @@ namespace InnoGotchi.WebAPI.Controllers
             var farmInfoVm = await Mediator.Send(query);
             return new JsonResult(farmInfoVm);
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAllFarms()
+        {
+            var query = new GetAllFarmsQuery
+            {
+                UserId = this.UserId
+            };
+            var farms = await Mediator.Send(query);
+            return new JsonResult(farms);
+        }
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetCollaboratiorFarms()

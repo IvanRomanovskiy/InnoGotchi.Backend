@@ -13,7 +13,7 @@ namespace InnoGotchi.Application.Models.Pets.Queries.GetPets
         private readonly IPetAppearanceDbContext petAppearanceDbContext;
         private readonly IPetsStatusesDbContext statusesDbContext;
 
-        public GetPetsQueryHandler(IFarmsDbContext farmDbContext, 
+        public GetPetsQueryHandler(IFarmsDbContext farmDbContext,
             IPetsDbContext petsDbContext, IPetAppearanceDbContext petAppearanceDbContext,IPetsStatusesDbContext statusesDbContext)
         {
             this.farmDbContext = farmDbContext;
