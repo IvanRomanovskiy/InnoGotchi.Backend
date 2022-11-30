@@ -31,26 +31,26 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetCollaboratorFarms
         {
             CollaboratorFarmsVm result = new CollaboratorFarmsVm();
             result.collaboratorFarmsVm = new List<CollaboratorFarmVm>();
- 
-                var CollaboratorIds = collaborationDbContext.Collaborations.Where(collab => collab.IdCollaborator == request.UserId);
 
-                var farms = farmsDbContext.Farms
-                    .Where(farm => CollaboratorIds.Select(collab => collab.IdOwner).Contains(farm.Owner.Id))
-                    .Include(o => o.Owner).Include(p => p.Pets);
+            var CollaboratorIds = collaborationDbContext.Collaborations.Where(collab => collab.IdCollaborator == request.UserId);
+
+            var farms = farmsDbContext.Farms
+                .Where(farm => CollaboratorIds.Select(collab => collab.IdOwner).Contains(farm.Owner.Id))
+                .Include(o => o.Owner).Include(p => p.Pets).ToList();
 
                 foreach (var farm in farms)
                 {
                     var vm = mapper.Map<CollaboratorFarmVm>(farm);
 
-                vm.Pets = (from p in vm.Pets
-                           join s in petsStatusesDbContext.PetsStatuses on p.Id equals s.Id
-                           join a in petAppearanceDbContext.PetAppearances
-                           .Include(p => p.Nose).Include(p => p.Body).Include(p => p.Eye).Include(p => p.Mouth)
-                           on p.Id equals a.Id
-                           select p).ToList();
-
                 foreach (var pet in vm.Pets)
                 {
+                    pet.Appearance = petAppearanceDbContext.PetAppearances
+                    .Include(p => p.Nose).Include(p => p.Body).Include(p => p.Eye).Include(p => p.Mouth)
+                    .FirstOrDefault(appearance => appearance.Id == pet.Id) ?? new PetAppearance();
+                    pet.Status = petsStatusesDbContext.PetsStatuses
+                    .FirstOrDefault(status => status.Id == pet.Id) ?? new PetStatus();
+
+
                     pet.Update();
                     petsDbContext.Pets.Update(pet);
                 }

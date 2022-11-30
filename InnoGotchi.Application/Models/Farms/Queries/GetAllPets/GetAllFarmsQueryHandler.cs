@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InnoGotchi.Application.Interfaces;
-using InnoGotchi.Application.Models.Farms.Queries.GetCollaboratorFarms;
+using InnoGotchi.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,20 +30,20 @@ namespace InnoGotchi.Application.Models.Farms.Queries.GetAllPets
 
 
             var farms = farmDbContext.Farms.Include(o => o.Owner).Include(p => p.Pets)
-                .Where(farm => farm.Owner.Id != request.UserId );
+                .Where(farm => farm.Owner.Id != request.UserId ).ToList();
 
             foreach (var farm in farms)
             {
                 var vm = mapper.Map<AllFarmsVm>(farm);
-                vm.Pets = (from p in vm.Pets
-                           join s in statusesDbContext.PetsStatuses on p.Id equals s.Id
-                           join a in petAppearanceDbContext.PetAppearances
-                           .Include(p => p.Nose).Include(p => p.Body).Include(p => p.Eye).Include(p => p.Mouth)
-                           on p.Id equals a.Id
-                select p).ToList();
 
                 foreach (var pet in vm.Pets)
                 {
+                    pet.Appearance = petAppearanceDbContext.PetAppearances
+                    .Include(p => p.Nose).Include(p => p.Body).Include(p => p.Eye).Include(p => p.Mouth)
+                    .FirstOrDefault(appearance => appearance.Id == pet.Id) ?? new PetAppearance();
+                    pet.Status = statusesDbContext.PetsStatuses
+                    .FirstOrDefault(status => status.Id == pet.Id) ?? new PetStatus();
+
                     pet.Update();
                     petsDbContext.Pets.Update(pet);
                 }
