@@ -1,9 +1,6 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing;
-using System.Runtime.Versioning;
-using InnoGotchi.WebAPI.Models;
-using InnoGotchi.WebAPI.Properties;
 
 namespace InnoGotchi.WebAPI.Common.Extentions
 {
@@ -32,9 +29,9 @@ namespace InnoGotchi.WebAPI.Common.Extentions
 
         public static byte[]? TryScaleImage(string baseStringPicture)
         {
-            var value = Convert.FromBase64String(baseStringPicture);
             try
             {
+                var value = Convert.FromBase64String(baseStringPicture);
                 using (var stream = new MemoryStream(value))
                 {
                     var image = Image.FromStream(stream);
