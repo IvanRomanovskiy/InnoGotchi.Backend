@@ -13,11 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E6DE155C-9D4A-44C8-ABB3-9241CC0DC96A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InnoGotchi.Application", "InnoGotchi.Application\InnoGotchi.Application.csproj", "{C520BAA7-FC7F-47C4-97DB-6ED804F64ED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InnoGotchi.Application", "InnoGotchi.Application\InnoGotchi.Application.csproj", "{C520BAA7-FC7F-47C4-97DB-6ED804F64ED2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InnoGotchi.Persistence", "InnoGotchi.Persistence\InnoGotchi.Persistence.csproj", "{CDE7C73B-391B-476B-AE06-EAF26D01A7C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InnoGotchi.Persistence", "InnoGotchi.Persistence\InnoGotchi.Persistence.csproj", "{CDE7C73B-391B-476B-AE06-EAF26D01A7C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InnoGotchi.WebAPI", "InnoGotchi.WebAPI\InnoGotchi.WebAPI.csproj", "{961A2AC9-2136-4536-AF24-64FB0346DCAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InnoGotchi.WebAPI", "InnoGotchi.WebAPI\InnoGotchi.WebAPI.csproj", "{961A2AC9-2136-4536-AF24-64FB0346DCAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InnoGotchi.Tests", "InnoGotchi.Tests\InnoGotchi.Tests.csproj", "{EEACBED2-A6F6-4B68-9401-F03CC3958C7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{961A2AC9-2136-4536-AF24-64FB0346DCAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{961A2AC9-2136-4536-AF24-64FB0346DCAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{961A2AC9-2136-4536-AF24-64FB0346DCAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEACBED2-A6F6-4B68-9401-F03CC3958C7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEACBED2-A6F6-4B68-9401-F03CC3958C7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEACBED2-A6F6-4B68-9401-F03CC3958C7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEACBED2-A6F6-4B68-9401-F03CC3958C7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{C520BAA7-FC7F-47C4-97DB-6ED804F64ED2} = {1556CCC7-C04A-4EC3-A694-F8E3603E236B}
 		{CDE7C73B-391B-476B-AE06-EAF26D01A7C0} = {059FECDB-A15C-47A4-A834-24E03000E31C}
 		{961A2AC9-2136-4536-AF24-64FB0346DCAC} = {574BD62E-CC92-4B01-A87D-519E0CF6437D}
+		{EEACBED2-A6F6-4B68-9401-F03CC3958C7E} = {E6DE155C-9D4A-44C8-ABB3-9241CC0DC96A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {443A7184-921F-458B-8438-A776C50A3B83}
